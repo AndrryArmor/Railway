@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1ded39955130490d99ad9747e8c9eaa0" Name="Diagram1">
+        <EntityTypeShape EntityType="RailwayModel.CLIENT" Width="1.5" PointX="3.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.EMPLOYEE" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.ORDER" Width="1.5" PointX="6" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.POSITION" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.REPAIR" Width="1.5" PointX="5.25" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.STATION" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.STATIONS_CONNECTIONS" Width="1.5" PointX="3" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.TRAIN" Width="1.5" PointX="8.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.TRAINS_WAGONS" Width="1.5" PointX="10.5" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.WAGON" Width="1.5" PointX="3" PointY="21.75" IsExpanded="true" />
+        <AssociationConnector Association="RailwayModel.ORDERS_FK_1" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.EMPLOYEES_FK_1" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.EMPLOYEES_FK_2" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.EMPLOYEES_FK_3" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.TRAINS_FK_1" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.ORDERS_FK_2" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.ORDERS_FK_3" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.TRAINS_FK_2" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.REPAIRS_FK_1" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.REPAIRS_FK_2" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.STATIONS_CONNECTIONS_FK_1" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.STATIONS_CONNECTIONS_FK_2" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.WAGONS_FK_1" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.TRAINS_WAGONS_FK_1" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.TRAINS_WAGONS_FK_2" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

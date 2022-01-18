@@ -1,0 +1,882 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RailwayModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CLIENTS">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="company_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="telephone_number" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EMPLOYEES">
+          <Key>
+            <PropertyRef Name="employee_id_number" />
+          </Key>
+          <Property Name="employee_id_number" Type="int" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="telephone_number" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="birth_date" Type="datetime" Nullable="false" />
+          <Property Name="position_id" Type="int" Nullable="false" />
+          <Property Name="station_id" Type="int" Nullable="false" />
+          <Property Name="employer_id_number" Type="int" />
+          <Property Name="appointment_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ORDERS">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="255" />
+          <Property Name="weight" Type="int" Nullable="false" />
+          <Property Name="volume" Type="int" Nullable="false" />
+          <Property Name="is_fulfilled" Type="bit" Nullable="false" />
+          <Property Name="client_id" Type="int" Nullable="false" />
+          <Property Name="departure_station_id" Type="int" Nullable="false" />
+          <Property Name="arrival_station_id" Type="int" Nullable="false" />
+          <Property Name="creation_date" Type="datetime" Nullable="false" />
+          <Property Name="execution_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="POSITIONS">
+          <Key>
+            <PropertyRef Name="position_id" />
+          </Key>
+          <Property Name="position_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="position_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REPAIRS">
+          <Key>
+            <PropertyRef Name="repair_id" />
+          </Key>
+          <Property Name="repair_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="wagon_number" Type="int" Nullable="false" />
+          <Property Name="repair_date" Type="datetime" Nullable="false" />
+          <Property Name="station_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="STATIONS">
+          <Key>
+            <PropertyRef Name="station_id" />
+          </Key>
+          <Property Name="station_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="station_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="has_depo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="STATIONS_CONNECTIONS">
+          <Key>
+            <PropertyRef Name="stations_connection_id" />
+          </Key>
+          <Property Name="stations_connection_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="distance" Type="int" Nullable="false" />
+          <Property Name="first_station_id" Type="int" Nullable="false" />
+          <Property Name="second_station_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TRAINS">
+          <Key>
+            <PropertyRef Name="train_id" />
+          </Key>
+          <Property Name="train_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="driver_id_number" Type="int" Nullable="false" />
+          <Property Name="order_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TRAINS_WAGONS">
+          <Key>
+            <PropertyRef Name="train_wagon_id" />
+          </Key>
+          <Property Name="train_wagon_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="train_id" Type="int" Nullable="false" />
+          <Property Name="wagon_number" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WAGONS">
+          <Key>
+            <PropertyRef Name="wagon_number" />
+          </Key>
+          <Property Name="wagon_number" Type="int" Nullable="false" />
+          <Property Name="weight" Type="int" Nullable="false" />
+          <Property Name="volume" Type="int" />
+          <Property Name="max_load" Type="int" Nullable="false" />
+          <Property Name="is_locomotive" Type="bit" Nullable="false" />
+          <Property Name="station_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="EMPLOYEES_FK_1">
+          <End Role="POSITIONS" Type="Self.POSITIONS" Multiplicity="1" />
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POSITIONS">
+              <PropertyRef Name="position_id" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="position_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EMPLOYEES_FK_2">
+          <End Role="STATIONS" Type="Self.STATIONS" Multiplicity="1" />
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATIONS">
+              <PropertyRef Name="station_id" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EMPLOYEES_FK_3">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="0..1" />
+          <End Role="EMPLOYEES1" Type="Self.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="employee_id_number" />
+            </Principal>
+            <Dependent Role="EMPLOYEES1">
+              <PropertyRef Name="employer_id_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ORDERS_FK_1">
+          <End Role="CLIENTS" Type="Self.CLIENTS" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTS">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ORDERS_FK_2">
+          <End Role="STATIONS" Type="Self.STATIONS" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATIONS">
+              <PropertyRef Name="station_id" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="departure_station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ORDERS_FK_3">
+          <End Role="STATIONS" Type="Self.STATIONS" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATIONS">
+              <PropertyRef Name="station_id" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="arrival_station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REPAIRS_FK_1">
+          <End Role="WAGONS" Type="Self.WAGONS" Multiplicity="1" />
+          <End Role="REPAIRS" Type="Self.REPAIRS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WAGONS">
+              <PropertyRef Name="wagon_number" />
+            </Principal>
+            <Dependent Role="REPAIRS">
+              <PropertyRef Name="wagon_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REPAIRS_FK_2">
+          <End Role="STATIONS" Type="Self.STATIONS" Multiplicity="1" />
+          <End Role="REPAIRS" Type="Self.REPAIRS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATIONS">
+              <PropertyRef Name="station_id" />
+            </Principal>
+            <Dependent Role="REPAIRS">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="STATIONS_CONNECTIONS_FK_1">
+          <End Role="STATIONS" Type="Self.STATIONS" Multiplicity="1" />
+          <End Role="STATIONS_CONNECTIONS" Type="Self.STATIONS_CONNECTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATIONS">
+              <PropertyRef Name="station_id" />
+            </Principal>
+            <Dependent Role="STATIONS_CONNECTIONS">
+              <PropertyRef Name="first_station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="STATIONS_CONNECTIONS_FK_2">
+          <End Role="STATIONS" Type="Self.STATIONS" Multiplicity="1" />
+          <End Role="STATIONS_CONNECTIONS" Type="Self.STATIONS_CONNECTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATIONS">
+              <PropertyRef Name="station_id" />
+            </Principal>
+            <Dependent Role="STATIONS_CONNECTIONS">
+              <PropertyRef Name="second_station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TRAINS_FK_1">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="1" />
+          <End Role="TRAINS" Type="Self.TRAINS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="employee_id_number" />
+            </Principal>
+            <Dependent Role="TRAINS">
+              <PropertyRef Name="driver_id_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TRAINS_FK_2">
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="1" />
+          <End Role="TRAINS" Type="Self.TRAINS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDERS">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="TRAINS">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TRAINS_WAGONS_FK_1">
+          <End Role="TRAINS" Type="Self.TRAINS" Multiplicity="1" />
+          <End Role="TRAINS_WAGONS" Type="Self.TRAINS_WAGONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRAINS">
+              <PropertyRef Name="train_id" />
+            </Principal>
+            <Dependent Role="TRAINS_WAGONS">
+              <PropertyRef Name="train_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TRAINS_WAGONS_FK_2">
+          <End Role="WAGONS" Type="Self.WAGONS" Multiplicity="1" />
+          <End Role="TRAINS_WAGONS" Type="Self.TRAINS_WAGONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WAGONS">
+              <PropertyRef Name="wagon_number" />
+            </Principal>
+            <Dependent Role="TRAINS_WAGONS">
+              <PropertyRef Name="wagon_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WAGONS_FK_1">
+          <End Role="STATIONS" Type="Self.STATIONS" Multiplicity="1" />
+          <End Role="WAGONS" Type="Self.WAGONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATIONS">
+              <PropertyRef Name="station_id" />
+            </Principal>
+            <Dependent Role="WAGONS">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RailwayModelStoreContainer">
+          <EntitySet Name="CLIENTS" EntityType="Self.CLIENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDERS" EntityType="Self.ORDERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="POSITIONS" EntityType="Self.POSITIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REPAIRS" EntityType="Self.REPAIRS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STATIONS" EntityType="Self.STATIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STATIONS_CONNECTIONS" EntityType="Self.STATIONS_CONNECTIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRAINS" EntityType="Self.TRAINS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRAINS_WAGONS" EntityType="Self.TRAINS_WAGONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WAGONS" EntityType="Self.WAGONS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="EMPLOYEES_FK_1" Association="Self.EMPLOYEES_FK_1">
+            <End Role="POSITIONS" EntitySet="POSITIONS" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="EMPLOYEES_FK_2" Association="Self.EMPLOYEES_FK_2">
+            <End Role="STATIONS" EntitySet="STATIONS" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="EMPLOYEES_FK_3" Association="Self.EMPLOYEES_FK_3">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="EMPLOYEES1" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="ORDERS_FK_1" Association="Self.ORDERS_FK_1">
+            <End Role="CLIENTS" EntitySet="CLIENTS" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="ORDERS_FK_2" Association="Self.ORDERS_FK_2">
+            <End Role="STATIONS" EntitySet="STATIONS" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="ORDERS_FK_3" Association="Self.ORDERS_FK_3">
+            <End Role="STATIONS" EntitySet="STATIONS" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="REPAIRS_FK_1" Association="Self.REPAIRS_FK_1">
+            <End Role="WAGONS" EntitySet="WAGONS" />
+            <End Role="REPAIRS" EntitySet="REPAIRS" />
+          </AssociationSet>
+          <AssociationSet Name="REPAIRS_FK_2" Association="Self.REPAIRS_FK_2">
+            <End Role="STATIONS" EntitySet="STATIONS" />
+            <End Role="REPAIRS" EntitySet="REPAIRS" />
+          </AssociationSet>
+          <AssociationSet Name="STATIONS_CONNECTIONS_FK_1" Association="Self.STATIONS_CONNECTIONS_FK_1">
+            <End Role="STATIONS" EntitySet="STATIONS" />
+            <End Role="STATIONS_CONNECTIONS" EntitySet="STATIONS_CONNECTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="STATIONS_CONNECTIONS_FK_2" Association="Self.STATIONS_CONNECTIONS_FK_2">
+            <End Role="STATIONS" EntitySet="STATIONS" />
+            <End Role="STATIONS_CONNECTIONS" EntitySet="STATIONS_CONNECTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="TRAINS_FK_1" Association="Self.TRAINS_FK_1">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="TRAINS" EntitySet="TRAINS" />
+          </AssociationSet>
+          <AssociationSet Name="TRAINS_FK_2" Association="Self.TRAINS_FK_2">
+            <End Role="ORDERS" EntitySet="ORDERS" />
+            <End Role="TRAINS" EntitySet="TRAINS" />
+          </AssociationSet>
+          <AssociationSet Name="TRAINS_WAGONS_FK_1" Association="Self.TRAINS_WAGONS_FK_1">
+            <End Role="TRAINS" EntitySet="TRAINS" />
+            <End Role="TRAINS_WAGONS" EntitySet="TRAINS_WAGONS" />
+          </AssociationSet>
+          <AssociationSet Name="TRAINS_WAGONS_FK_2" Association="Self.TRAINS_WAGONS_FK_2">
+            <End Role="WAGONS" EntitySet="WAGONS" />
+            <End Role="TRAINS_WAGONS" EntitySet="TRAINS_WAGONS" />
+          </AssociationSet>
+          <AssociationSet Name="WAGONS_FK_1" Association="Self.WAGONS_FK_1">
+            <End Role="STATIONS" EntitySet="STATIONS" />
+            <End Role="WAGONS" EntitySet="WAGONS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RailwayModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CLIENT">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="company_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="telephone_number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ORDERS" Relationship="Self.ORDERS_FK_1" FromRole="CLIENTS" ToRole="ORDERS" />
+        </EntityType>
+        <EntityType Name="EMPLOYEE">
+          <Key>
+            <PropertyRef Name="employee_id_number" />
+          </Key>
+          <Property Name="employee_id_number" Type="Int32" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="telephone_number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="birth_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="position_id" Type="Int32" Nullable="false" />
+          <Property Name="station_id" Type="Int32" Nullable="false" />
+          <Property Name="employer_id_number" Type="Int32" />
+          <Property Name="appointment_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="POSITION" Relationship="Self.EMPLOYEES_FK_1" FromRole="EMPLOYEES" ToRole="POSITIONS" />
+          <NavigationProperty Name="STATION" Relationship="Self.EMPLOYEES_FK_2" FromRole="EMPLOYEES" ToRole="STATIONS" />
+          <NavigationProperty Name="EMPLOYEES1" Relationship="Self.EMPLOYEES_FK_3" FromRole="EMPLOYEES" ToRole="EMPLOYEES1" />
+          <NavigationProperty Name="EMPLOYEE1" Relationship="Self.EMPLOYEES_FK_3" FromRole="EMPLOYEES1" ToRole="EMPLOYEES" />
+          <NavigationProperty Name="TRAINS" Relationship="Self.TRAINS_FK_1" FromRole="EMPLOYEES" ToRole="TRAINS" />
+        </EntityType>
+        <EntityType Name="ORDER">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="weight" Type="Int32" Nullable="false" />
+          <Property Name="volume" Type="Int32" Nullable="false" />
+          <Property Name="is_fulfilled" Type="Boolean" Nullable="false" />
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <Property Name="departure_station_id" Type="Int32" Nullable="false" />
+          <Property Name="arrival_station_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CLIENT" Relationship="Self.ORDERS_FK_1" FromRole="ORDERS" ToRole="CLIENTS" />
+          <NavigationProperty Name="STATION" Relationship="Self.ORDERS_FK_2" FromRole="ORDERS" ToRole="STATIONS" />
+          <NavigationProperty Name="STATION1" Relationship="Self.ORDERS_FK_3" FromRole="ORDERS" ToRole="STATIONS" />
+          <NavigationProperty Name="TRAINS" Relationship="Self.TRAINS_FK_2" FromRole="ORDERS" ToRole="TRAINS" />
+          <Property Name="creation_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="execution_date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="POSITION">
+          <Key>
+            <PropertyRef Name="position_id" />
+          </Key>
+          <Property Name="position_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="position_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="EMPLOYEES" Relationship="Self.EMPLOYEES_FK_1" FromRole="POSITIONS" ToRole="EMPLOYEES" />
+        </EntityType>
+        <EntityType Name="REPAIR">
+          <Key>
+            <PropertyRef Name="repair_id" />
+          </Key>
+          <Property Name="repair_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="wagon_number" Type="Int32" Nullable="false" />
+          <Property Name="repair_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="station_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="WAGON" Relationship="Self.REPAIRS_FK_1" FromRole="REPAIRS" ToRole="WAGONS" />
+          <NavigationProperty Name="STATION" Relationship="Self.REPAIRS_FK_2" FromRole="REPAIRS" ToRole="STATIONS" />
+        </EntityType>
+        <EntityType Name="STATION">
+          <Key>
+            <PropertyRef Name="station_id" />
+          </Key>
+          <Property Name="station_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="station_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="has_depo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EMPLOYEES" Relationship="Self.EMPLOYEES_FK_2" FromRole="STATIONS" ToRole="EMPLOYEES" />
+          <NavigationProperty Name="ORDERS" Relationship="Self.ORDERS_FK_2" FromRole="STATIONS" ToRole="ORDERS" />
+          <NavigationProperty Name="ORDERS1" Relationship="Self.ORDERS_FK_3" FromRole="STATIONS" ToRole="ORDERS" />
+          <NavigationProperty Name="REPAIRS" Relationship="Self.REPAIRS_FK_2" FromRole="STATIONS" ToRole="REPAIRS" />
+          <NavigationProperty Name="STATIONS_CONNECTIONS" Relationship="Self.STATIONS_CONNECTIONS_FK_1" FromRole="STATIONS" ToRole="STATIONS_CONNECTIONS" />
+          <NavigationProperty Name="STATIONS_CONNECTIONS1" Relationship="Self.STATIONS_CONNECTIONS_FK_2" FromRole="STATIONS" ToRole="STATIONS_CONNECTIONS" />
+          <NavigationProperty Name="WAGONS" Relationship="Self.WAGONS_FK_1" FromRole="STATIONS" ToRole="WAGONS" />
+        </EntityType>
+        <EntityType Name="STATIONS_CONNECTIONS">
+          <Key>
+            <PropertyRef Name="stations_connection_id" />
+          </Key>
+          <Property Name="stations_connection_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="distance" Type="Int32" Nullable="false" />
+          <Property Name="first_station_id" Type="Int32" Nullable="false" />
+          <Property Name="second_station_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="STATION" Relationship="Self.STATIONS_CONNECTIONS_FK_1" FromRole="STATIONS_CONNECTIONS" ToRole="STATIONS" />
+          <NavigationProperty Name="STATION1" Relationship="Self.STATIONS_CONNECTIONS_FK_2" FromRole="STATIONS_CONNECTIONS" ToRole="STATIONS" />
+        </EntityType>
+        <EntityType Name="TRAIN">
+          <Key>
+            <PropertyRef Name="train_id" />
+          </Key>
+          <Property Name="train_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="driver_id_number" Type="Int32" Nullable="false" />
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EMPLOYEE" Relationship="Self.TRAINS_FK_1" FromRole="TRAINS" ToRole="EMPLOYEES" />
+          <NavigationProperty Name="ORDER" Relationship="Self.TRAINS_FK_2" FromRole="TRAINS" ToRole="ORDERS" />
+          <NavigationProperty Name="TRAINS_WAGONS" Relationship="Self.TRAINS_WAGONS_FK_1" FromRole="TRAINS" ToRole="TRAINS_WAGONS" />
+        </EntityType>
+        <EntityType Name="TRAINS_WAGONS">
+          <Key>
+            <PropertyRef Name="train_wagon_id" />
+          </Key>
+          <Property Name="train_wagon_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="train_id" Type="Int32" Nullable="false" />
+          <Property Name="wagon_number" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TRAIN" Relationship="Self.TRAINS_WAGONS_FK_1" FromRole="TRAINS_WAGONS" ToRole="TRAINS" />
+          <NavigationProperty Name="WAGON" Relationship="Self.TRAINS_WAGONS_FK_2" FromRole="TRAINS_WAGONS" ToRole="WAGONS" />
+        </EntityType>
+        <EntityType Name="WAGON">
+          <Key>
+            <PropertyRef Name="wagon_number" />
+          </Key>
+          <Property Name="wagon_number" Type="Int32" Nullable="false" />
+          <Property Name="weight" Type="Int32" Nullable="false" />
+          <Property Name="volume" Type="Int32" />
+          <Property Name="max_load" Type="Int32" Nullable="false" />
+          <Property Name="is_locomotive" Type="Boolean" Nullable="false" />
+          <Property Name="station_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="REPAIRS" Relationship="Self.REPAIRS_FK_1" FromRole="WAGONS" ToRole="REPAIRS" />
+          <NavigationProperty Name="STATION" Relationship="Self.WAGONS_FK_1" FromRole="WAGONS" ToRole="STATIONS" />
+          <NavigationProperty Name="TRAINS_WAGONS" Relationship="Self.TRAINS_WAGONS_FK_2" FromRole="WAGONS" ToRole="TRAINS_WAGONS" />
+        </EntityType>
+        <Association Name="ORDERS_FK_1">
+          <End Role="CLIENTS" Type="Self.CLIENT" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTS">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EMPLOYEES_FK_1">
+          <End Role="POSITIONS" Type="Self.POSITION" Multiplicity="1" />
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POSITIONS">
+              <PropertyRef Name="position_id" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="position_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EMPLOYEES_FK_2">
+          <End Role="STATIONS" Type="Self.STATION" Multiplicity="1" />
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATIONS">
+              <PropertyRef Name="station_id" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EMPLOYEES_FK_3">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEE" Multiplicity="0..1" />
+          <End Role="EMPLOYEES1" Type="Self.EMPLOYEE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="employee_id_number" />
+            </Principal>
+            <Dependent Role="EMPLOYEES1">
+              <PropertyRef Name="employer_id_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TRAINS_FK_1">
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEE" Multiplicity="1" />
+          <End Role="TRAINS" Type="Self.TRAIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="employee_id_number" />
+            </Principal>
+            <Dependent Role="TRAINS">
+              <PropertyRef Name="driver_id_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ORDERS_FK_2">
+          <End Role="STATIONS" Type="Self.STATION" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATIONS">
+              <PropertyRef Name="station_id" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="departure_station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ORDERS_FK_3">
+          <End Role="STATIONS" Type="Self.STATION" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATIONS">
+              <PropertyRef Name="station_id" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="arrival_station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TRAINS_FK_2">
+          <End Role="ORDERS" Type="Self.ORDER" Multiplicity="1" />
+          <End Role="TRAINS" Type="Self.TRAIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDERS">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="TRAINS">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REPAIRS_FK_1">
+          <End Role="WAGONS" Type="Self.WAGON" Multiplicity="1" />
+          <End Role="REPAIRS" Type="Self.REPAIR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WAGONS">
+              <PropertyRef Name="wagon_number" />
+            </Principal>
+            <Dependent Role="REPAIRS">
+              <PropertyRef Name="wagon_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REPAIRS_FK_2">
+          <End Role="STATIONS" Type="Self.STATION" Multiplicity="1" />
+          <End Role="REPAIRS" Type="Self.REPAIR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATIONS">
+              <PropertyRef Name="station_id" />
+            </Principal>
+            <Dependent Role="REPAIRS">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="STATIONS_CONNECTIONS_FK_1">
+          <End Role="STATIONS" Type="Self.STATION" Multiplicity="1" />
+          <End Role="STATIONS_CONNECTIONS" Type="Self.STATIONS_CONNECTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATIONS">
+              <PropertyRef Name="station_id" />
+            </Principal>
+            <Dependent Role="STATIONS_CONNECTIONS">
+              <PropertyRef Name="first_station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="STATIONS_CONNECTIONS_FK_2">
+          <End Role="STATIONS" Type="Self.STATION" Multiplicity="1" />
+          <End Role="STATIONS_CONNECTIONS" Type="Self.STATIONS_CONNECTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATIONS">
+              <PropertyRef Name="station_id" />
+            </Principal>
+            <Dependent Role="STATIONS_CONNECTIONS">
+              <PropertyRef Name="second_station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WAGONS_FK_1">
+          <End Role="STATIONS" Type="Self.STATION" Multiplicity="1" />
+          <End Role="WAGONS" Type="Self.WAGON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATIONS">
+              <PropertyRef Name="station_id" />
+            </Principal>
+            <Dependent Role="WAGONS">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TRAINS_WAGONS_FK_1">
+          <End Role="TRAINS" Type="Self.TRAIN" Multiplicity="1" />
+          <End Role="TRAINS_WAGONS" Type="Self.TRAINS_WAGONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRAINS">
+              <PropertyRef Name="train_id" />
+            </Principal>
+            <Dependent Role="TRAINS_WAGONS">
+              <PropertyRef Name="train_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TRAINS_WAGONS_FK_2">
+          <End Role="WAGONS" Type="Self.WAGON" Multiplicity="1" />
+          <End Role="TRAINS_WAGONS" Type="Self.TRAINS_WAGONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WAGONS">
+              <PropertyRef Name="wagon_number" />
+            </Principal>
+            <Dependent Role="TRAINS_WAGONS">
+              <PropertyRef Name="wagon_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RailwayEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CLIENTS" EntityType="Self.CLIENT" />
+          <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEE" />
+          <EntitySet Name="ORDERS" EntityType="Self.ORDER" />
+          <EntitySet Name="POSITIONS" EntityType="Self.POSITION" />
+          <EntitySet Name="REPAIRS" EntityType="Self.REPAIR" />
+          <EntitySet Name="STATIONS" EntityType="Self.STATION" />
+          <EntitySet Name="STATIONS_CONNECTIONS" EntityType="Self.STATIONS_CONNECTIONS" />
+          <EntitySet Name="TRAINS" EntityType="Self.TRAIN" />
+          <EntitySet Name="TRAINS_WAGONS" EntityType="Self.TRAINS_WAGONS" />
+          <EntitySet Name="WAGONS" EntityType="Self.WAGON" />
+          <AssociationSet Name="ORDERS_FK_1" Association="Self.ORDERS_FK_1">
+            <End Role="CLIENTS" EntitySet="CLIENTS" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="EMPLOYEES_FK_1" Association="Self.EMPLOYEES_FK_1">
+            <End Role="POSITIONS" EntitySet="POSITIONS" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="EMPLOYEES_FK_2" Association="Self.EMPLOYEES_FK_2">
+            <End Role="STATIONS" EntitySet="STATIONS" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="EMPLOYEES_FK_3" Association="Self.EMPLOYEES_FK_3">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="EMPLOYEES1" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="TRAINS_FK_1" Association="Self.TRAINS_FK_1">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="TRAINS" EntitySet="TRAINS" />
+          </AssociationSet>
+          <AssociationSet Name="ORDERS_FK_2" Association="Self.ORDERS_FK_2">
+            <End Role="STATIONS" EntitySet="STATIONS" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="ORDERS_FK_3" Association="Self.ORDERS_FK_3">
+            <End Role="STATIONS" EntitySet="STATIONS" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="TRAINS_FK_2" Association="Self.TRAINS_FK_2">
+            <End Role="ORDERS" EntitySet="ORDERS" />
+            <End Role="TRAINS" EntitySet="TRAINS" />
+          </AssociationSet>
+          <AssociationSet Name="REPAIRS_FK_1" Association="Self.REPAIRS_FK_1">
+            <End Role="WAGONS" EntitySet="WAGONS" />
+            <End Role="REPAIRS" EntitySet="REPAIRS" />
+          </AssociationSet>
+          <AssociationSet Name="REPAIRS_FK_2" Association="Self.REPAIRS_FK_2">
+            <End Role="STATIONS" EntitySet="STATIONS" />
+            <End Role="REPAIRS" EntitySet="REPAIRS" />
+          </AssociationSet>
+          <AssociationSet Name="STATIONS_CONNECTIONS_FK_1" Association="Self.STATIONS_CONNECTIONS_FK_1">
+            <End Role="STATIONS" EntitySet="STATIONS" />
+            <End Role="STATIONS_CONNECTIONS" EntitySet="STATIONS_CONNECTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="STATIONS_CONNECTIONS_FK_2" Association="Self.STATIONS_CONNECTIONS_FK_2">
+            <End Role="STATIONS" EntitySet="STATIONS" />
+            <End Role="STATIONS_CONNECTIONS" EntitySet="STATIONS_CONNECTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="WAGONS_FK_1" Association="Self.WAGONS_FK_1">
+            <End Role="STATIONS" EntitySet="STATIONS" />
+            <End Role="WAGONS" EntitySet="WAGONS" />
+          </AssociationSet>
+          <AssociationSet Name="TRAINS_WAGONS_FK_1" Association="Self.TRAINS_WAGONS_FK_1">
+            <End Role="TRAINS" EntitySet="TRAINS" />
+            <End Role="TRAINS_WAGONS" EntitySet="TRAINS_WAGONS" />
+          </AssociationSet>
+          <AssociationSet Name="TRAINS_WAGONS_FK_2" Association="Self.TRAINS_WAGONS_FK_2">
+            <End Role="WAGONS" EntitySet="WAGONS" />
+            <End Role="TRAINS_WAGONS" EntitySet="TRAINS_WAGONS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RailwayModelStoreContainer" CdmEntityContainer="RailwayEntities">
+          <EntitySetMapping Name="CLIENTS">
+            <EntityTypeMapping TypeName="RailwayModel.CLIENT">
+              <MappingFragment StoreEntitySet="CLIENTS">
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="company_name" ColumnName="company_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="telephone_number" ColumnName="telephone_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLOYEES">
+            <EntityTypeMapping TypeName="RailwayModel.EMPLOYEE">
+              <MappingFragment StoreEntitySet="EMPLOYEES">
+                <ScalarProperty Name="employee_id_number" ColumnName="employee_id_number" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="telephone_number" ColumnName="telephone_number" />
+                <ScalarProperty Name="birth_date" ColumnName="birth_date" />
+                <ScalarProperty Name="position_id" ColumnName="position_id" />
+                <ScalarProperty Name="station_id" ColumnName="station_id" />
+                <ScalarProperty Name="employer_id_number" ColumnName="employer_id_number" />
+                <ScalarProperty Name="appointment_date" ColumnName="appointment_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDERS">
+            <EntityTypeMapping TypeName="RailwayModel.ORDER">
+              <MappingFragment StoreEntitySet="ORDERS">
+                <ScalarProperty Name="execution_date" ColumnName="execution_date" />
+                <ScalarProperty Name="creation_date" ColumnName="creation_date" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="volume" ColumnName="volume" />
+                <ScalarProperty Name="is_fulfilled" ColumnName="is_fulfilled" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="departure_station_id" ColumnName="departure_station_id" />
+                <ScalarProperty Name="arrival_station_id" ColumnName="arrival_station_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="POSITIONS">
+            <EntityTypeMapping TypeName="RailwayModel.POSITION">
+              <MappingFragment StoreEntitySet="POSITIONS">
+                <ScalarProperty Name="position_id" ColumnName="position_id" />
+                <ScalarProperty Name="position_name" ColumnName="position_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REPAIRS">
+            <EntityTypeMapping TypeName="RailwayModel.REPAIR">
+              <MappingFragment StoreEntitySet="REPAIRS">
+                <ScalarProperty Name="repair_id" ColumnName="repair_id" />
+                <ScalarProperty Name="wagon_number" ColumnName="wagon_number" />
+                <ScalarProperty Name="repair_date" ColumnName="repair_date" />
+                <ScalarProperty Name="station_id" ColumnName="station_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STATIONS">
+            <EntityTypeMapping TypeName="RailwayModel.STATION">
+              <MappingFragment StoreEntitySet="STATIONS">
+                <ScalarProperty Name="station_id" ColumnName="station_id" />
+                <ScalarProperty Name="station_name" ColumnName="station_name" />
+                <ScalarProperty Name="has_depo" ColumnName="has_depo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STATIONS_CONNECTIONS">
+            <EntityTypeMapping TypeName="RailwayModel.STATIONS_CONNECTIONS">
+              <MappingFragment StoreEntitySet="STATIONS_CONNECTIONS">
+                <ScalarProperty Name="stations_connection_id" ColumnName="stations_connection_id" />
+                <ScalarProperty Name="distance" ColumnName="distance" />
+                <ScalarProperty Name="first_station_id" ColumnName="first_station_id" />
+                <ScalarProperty Name="second_station_id" ColumnName="second_station_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRAINS">
+            <EntityTypeMapping TypeName="RailwayModel.TRAIN">
+              <MappingFragment StoreEntitySet="TRAINS">
+                <ScalarProperty Name="train_id" ColumnName="train_id" />
+                <ScalarProperty Name="driver_id_number" ColumnName="driver_id_number" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRAINS_WAGONS">
+            <EntityTypeMapping TypeName="RailwayModel.TRAINS_WAGONS">
+              <MappingFragment StoreEntitySet="TRAINS_WAGONS">
+                <ScalarProperty Name="train_wagon_id" ColumnName="train_wagon_id" />
+                <ScalarProperty Name="train_id" ColumnName="train_id" />
+                <ScalarProperty Name="wagon_number" ColumnName="wagon_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WAGONS">
+            <EntityTypeMapping TypeName="RailwayModel.WAGON">
+              <MappingFragment StoreEntitySet="WAGONS">
+                <ScalarProperty Name="wagon_number" ColumnName="wagon_number" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="volume" ColumnName="volume" />
+                <ScalarProperty Name="max_load" ColumnName="max_load" />
+                <ScalarProperty Name="is_locomotive" ColumnName="is_locomotive" />
+                <ScalarProperty Name="station_id" ColumnName="station_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

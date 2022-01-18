@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="12d010bf80134212a0964c8b77cd9279" Name="Diagram1">
+        <EntityTypeShape EntityType="RailwayModel.CLIENT" Width="1.5" PointX="3.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.EMPLOYEE" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.ORDER" Width="1.5" PointX="6" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.POSITION" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.REPAIR" Width="1.5" PointX="5.25" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.STATION" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.STATIONS_CONNECTIONS" Width="1.5" PointX="3" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.TRAIN" Width="1.5" PointX="8.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.TRAINS_WAGONS" Width="1.5" PointX="10.5" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="RailwayModel.WAGON" Width="1.5" PointX="3" PointY="16.25" IsExpanded="true" />
+        <AssociationConnector Association="RailwayModel.ORDERS_FK_1" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.EMPLOYEES_FK_1" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.EMPLOYEES_FK_2" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.EMPLOYEES_FK_3" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.TRAINS_FK_1" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.ORDERS_FK_2" ManuallyRouted="true" >
+          <ConnectorPoint PointX="2.25" PointY="10.961146147135416" />
+          <ConnectorPoint PointX="2.75" PointY="10.961146147135416" />
+          <ConnectorPoint PointX="2.75" PointY="12.880270182291666" />
+          <ConnectorPoint PointX="6.75" PointY="12.880270182291666" />
+          <ConnectorPoint PointX="6.75" PointY="12.335999348958332" />
+          <ConnectorPoint PointX="2.8333020027668181" PointY="12.228567681187547" />
+          <ConnectorPoint PointX="2.6666979972331819" PointY="12.223997876166989" />
+          <ConnectorPoint PointX="2.1927120833333342" PointY="12.210996848958331" />
+          <ConnectorPoint PointX="2.6666666666666665" PointY="12.210996848958331" />
+          <ConnectorPoint PointX="2.8333333333333335" PointY="12.210996848958331" />
+          <ConnectorPoint PointX="6" PointY="12.210996848958331" />
+        </AssociationConnector>
+        <AssociationConnector Association="RailwayModel.ORDERS_FK_3" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.TRAINS_FK_2" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.REPAIRS_FK_1" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.REPAIRS_FK_2" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.STATIONS_CONNECTIONS_FK_1" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.STATIONS_CONNECTIONS_FK_2" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.WAGONS_FK_1" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.TRAINS_WAGONS_FK_1" ManuallyRouted="false" />
+        <AssociationConnector Association="RailwayModel.TRAINS_WAGONS_FK_2" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
